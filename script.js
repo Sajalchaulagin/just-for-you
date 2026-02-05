@@ -21,8 +21,8 @@ const maxClicks = 5; // Number of clicks before No button disappears
 bgMusic.volume = 0.2;
 
 // allow autoplay after first user interaction
-function startMusicOnce(){
-    bgMusic.play().catch(() => {});
+function startMusicOnce() {
+    bgMusic.play().catch(() => { });
     document.removeEventListener('click', startMusicOnce);
     document.removeEventListener('touchstart', startMusicOnce);
 }
@@ -33,53 +33,53 @@ document.addEventListener('touchstart', startMusicOnce);
 
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Start the countdown
     updateCountdown();
     setInterval(updateCountdown, 1000);
-    
+
     // Set initial active theme
     setActiveTheme('romantic-pink');
-    
+
     // Initialize music button state
     updateMusicButton();
-    
+
     // Add click event to the Yes button
-    yesBtn.addEventListener('click', function() {
+    yesBtn.addEventListener('click', function () {
         // Show success message with animation
         successMessage.style.display = 'block';
         successMessage.style.animation = 'fadeIn 1s ease';
-        
+
         // Hide the buttons container
         buttonsContainer.style.display = 'none';
-        
+
         // Play a happy sound (optional)
         playHappySound();
-        
+
         // Add pulsing animation to success message
         successMessage.style.animation = 'pulse 2s infinite';
     });
-    
+
     // Add click event to the No button
-    noBtn.addEventListener('click', function() {
+    noBtn.addEventListener('click', function () {
         noBtnClickCount++;
-        
+
         // Increase the size of Yes button
         yesBtnScale += 0.3;
         yesBtn.style.transform = `scale(${yesBtnScale})`;
-        
+
         // Make No button smaller and fade out gradually
         const noBtnOpacity = 1 - (noBtnClickCount / maxClicks);
         noBtn.style.opacity = noBtnOpacity;
         noBtn.style.transform = `scale(${1 - (noBtnClickCount / maxClicks) * 0.5})`;
-        
+
         // If max clicks reached, hide No button completely
         if (noBtnClickCount >= maxClicks) {
             noBtn.style.display = 'none';
-            
+
             // Move Yes button to center
             buttonsContainer.style.justifyContent = 'center';
-            
+
             // Show a playful message
             setTimeout(() => {
                 alert("Haha, I knew you'd say yes! ❤️");
@@ -92,21 +92,21 @@ document.addEventListener('DOMContentLoaded', function() {
             noBtn.style.transform += ` translate(${randomX}px, ${randomY}px)`;
         }
     });
-    
+
     // Add event listeners to theme buttons
     themeButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const theme = this.getAttribute('data-theme');
             setActiveTheme(theme);
-            
+
             // Update active button styling
             themeButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
         });
     });
-    
+
     // Add event listener to music toggle button
-    musicToggle.addEventListener('click', function() {
+    musicToggle.addEventListener('click', function () {
         if (bgMusic.paused) {
             bgMusic.play();
         } else {
@@ -114,55 +114,64 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         updateMusicButton();
     });
-    
+
     // Preload audio to avoid delay on first play
     bgMusic.load();
 });
 
 // Function to update the countdown to Valentine's Day
 function updateCountdown() {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    
-    // Set Valentine's Day to February 14 of the current year
-    // If it's already past February 14 this year, target next year
-    let valentinesDay = new Date(currentYear, 1, 14); // February is month 1 (0-indexed)
-    
-    if (now > valentinesDay) {
-        valentinesDay = new Date(currentYear + 1, 1, 14);
+    // always calculate from real current time
+    const now = Date.now();
+
+    // use a fixed timezone (UTC) to avoid user timezone issues)
+    const nowDate = new Date(now);
+    const Year = nowDate.getUTCFullYear();
+
+    // valentine's Day END (Feb 14, 23:59:59 UTC)
+    let valentinesUTC = Date.UTC(Year, 1, 14, 23, 59, 59);
+
+    // If already passed this year, move to next year
+    if (now > valentinesUTC) {
+        valentinesUTC = Date.UTC(Year + 1, 14, 23, 59, 59);
     }
-    
-    // Calculate time difference
-    const timeDiff = valentinesDay.getTime() - now.getTime();
-    
-    // Calculate days, hours, minutes, seconds
-    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-    
-    // Update countdown display
-    countdownDays.textContent = days.toString().padStart(2, '0');
-    countdownHours.textContent = hours.toString().padStart(2, '0');
-    countdownMinutes.textContent = minutes.toString().padStart(2, '0');
-    countdownSeconds.textContent = seconds.toString().padStart(2, '0');
+
+    const diff = valentinesUTC - now;
+
+    if (diff <= 0) {
+        countdownDays.textContent = "00";
+        countdownHours.textContent = "00";
+        countdownMinutes.textContent = "00";
+        countdownSeconds.textContent = "00";
+        return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    countdownDays.textContent = String(days).padStart(2, "0");
+    countdownHours.textContent = String(hours).padStart(2, "0");
+    countdownMinutes.textContent = String(minutes).padStart(2, "0");
+    countdownSeconds.textContent = String(seconds).padStart(2, "0");
 }
 
 // Function to set the active theme
 function setActiveTheme(theme) {
     // Remove all theme classes from body
     document.body.classList.remove(
-        'romantic-pink', 
-        'starry-night', 
-        'sunset-love', 
+        'romantic-pink',
+        'starry-night',
+        'sunset-love',
         'lavender-dream',
         'hearts-bg',
         'roses-bg'
     );
-    
+
     // Add the selected theme class
     document.body.classList.add(theme);
-    
+
     // Store the theme in localStorage to remember preference
     localStorage.setItem('valentineTheme', theme);
 }
@@ -183,7 +192,7 @@ function playHappySound() {
     // Create a temporary audio element for the success sound
     const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-happy-crowd-laugh-464.mp3');
     audio.volume = 0.3;
-    
+
     // Play the sound
     audio.play().catch(e => {
         console.log("Audio play failed:", e);
@@ -196,7 +205,7 @@ function loadSavedTheme() {
     const savedTheme = localStorage.getItem('valentineTheme');
     if (savedTheme) {
         setActiveTheme(savedTheme);
-        
+
         // Update active button
         themeButtons.forEach(button => {
             if (button.getAttribute('data-theme') === savedTheme) {
