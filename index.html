@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💝</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Background theme selector -->
+        <!-- <div class="theme-selector">
+            <h3><i class="fas fa-palette"></i> Choose a Theme</h3>
+            <div class="theme-buttons">
+                <button class="theme-btn active" data-theme="romantic-pink" style="background: linear-gradient(135deg, #ffafbd, #ffc3a0);">Romantic Pink</button>
+                <button class="theme-btn" data-theme="starry-night" style="background: linear-gradient(135deg, #3f64c4, #1e3799);">Starry Night</button>
+                <button class="theme-btn" data-theme="sunset-love" style="background: linear-gradient(135deg, #ff7e5f, #feb47b);">Sunset Love</button>
+                <button class="theme-btn" data-theme="lavender-dream" style="background: linear-gradient(135deg, #d4a5c9, #c8b6ff);">Lavender Dream</button>
+                <button class="theme-btn" data-theme="hearts-bg">Hearts Pattern</button>
+                <button class="theme-btn" data-theme="roses-bg">Roses</button>
+            </div>
+        </div> -->
+        
+        <!-- Main content -->
+        <div class="content">
+            <!-- Countdown timer -->
+            <div class="countdown-container">
+                <h2><i class="fas fa-heartbeat"></i> Counting down to Valentine's Day</h2>
+                <div class="countdown">
+                    <div class="countdown-item">
+                        <span id="days">00</span>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="hours">00</span>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="minutes">00</span>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="seconds">00</span>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Proposal section -->
+            <div class="proposal-container">
+                <div class="hearts">
+                    <i class="fas fa-heart heart-icon"></i>
+                    <i class="fas fa-heart heart-icon"></i>
+                    <i class="fas fa-heart heart-icon"></i>
+                </div>
+                
+                <h1 class="proposal-text">My Dearest Love,</h1>
+                <p class="message">Every moment with you feels like a beautiful dream. <br>You've filled my life with more joy than I ever thought possible.</p>
+                
+                <div class="question-container">
+                    <h2 class="question">Will you be my Valentine?</h2>
+                    <div class="hearts">
+                        <i class="fas fa-heart heart-icon"></i>
+                        <i class="fas fa-heart heart-icon"></i>
+                        <i class="fas fa-heart heart-icon"></i>
+                    </div>
+                </div>
+                
+                <!-- Interactive buttons -->
+                <div class="buttons-container">
+                    <button id="yes-btn" class="btn yes-btn">
+                        <i class="fas fa-heart"></i> Yes, Absolutely!
+                    </button>
+                    <button id="no-btn" class="btn no-btn">
+                        <i class="fas fa-times"></i> No, I'm afraid not
+                    </button>
+                </div>
+                
+                <!-- Hidden message that appears after clicking Yes -->
+                <div id="success-message" class="success-message">
+                    <h2><i class="fas fa-heart-circle-check"></i> You've made me the happiest person in the world!</h2>
+                    <p>I can't wait to celebrate our love on Valentine's Day and every day after. <br> I love you more than words can express! 💝</p>
+                    <div class="confetti">
+                        <i class="fas fa-heart confetti-heart"></i>
+                        <i class="fas fa-heart confetti-heart"></i>
+                        <i class="fas fa-heart confetti-heart"></i>
+                        <i class="fas fa-heart confetti-heart"></i>
+                        <i class="fas fa-heart confetti-heart"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer with romantic quote -->
+            <div class="footer">
+                <p class="quote">"I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more." – Angelita Lim</p>
+                <p class="signature">Made with <i class="fas fa-heart"></i> for the most amazing person in my life</p>
+            </div>
+        </div>
+        
+        <!-- Music toggle -->
+        <div class="music-control">
+            <button id="music-toggle" class="music-btn">
+                <i class="fas fa-music"></i> <span>Play Music</span>
+            </button>
+            <audio id="bg-music" loop>
+                <source src="music.mp3" type="audio/mpeg" autoplay >
+            </audio>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
